@@ -1,19 +1,15 @@
-import debounce from './debounce.js';
+import debounce from "./debounce.js";
 
-navegacao
 export class Slide {
-=======
-export default class Slide {
-main
   constructor(slide, wrapper) {
-    this.slide = document.querySelector(slide)
+    this.slide = document.querySelector(slide);
     this.wrapper = document.querySelector(wrapper);
-    this.dist = { finalPosition: 0, startX: 0, movement: 0 }
-    this.activeClass = 'active';
+    this.dist = { finalPosition: 0, startX: 0, movement: 0 };
+    this.activeClass = "active";
   }
 
   transition(active) {
-    this.slide.style.transition = active ? 'transform .3s' : '';
+    this.slide.style.transition = active ? "transform .3s" : "";
   }
 
   moveSlide(distX) {
@@ -28,26 +24,29 @@ main
 
   onStart(event) {
     let movetype;
-    if (event.type === 'mousedown') {
+    if (event.type === "mousedown") {
       event.preventDefault();
       this.dist.startX = event.clientX;
-      movetype = 'mousemove';
+      movetype = "mousemove";
     } else {
       this.dist.startX = event.changedTouches[0].clientX;
-      movetype = 'touchmove';
+      movetype = "touchmove";
     }
     this.wrapper.addEventListener(movetype, this.onMove);
     this.transition(false);
   }
 
   onMove(event) {
-    const pointerPosition = (event.type === 'mousemove') ? event.clientX : event.changedTouches[0].clientX;
+    const pointerPosition =
+      event.type === "mousemove"
+        ? event.clientX
+        : event.changedTouches[0].clientX;
     const finalPosition = this.updatePosition(pointerPosition);
     this.moveSlide(finalPosition);
   }
 
   onEnd(event) {
-    const movetype = (event.type === 'mouseup') ? 'mousemove' : 'touchmove';
+    const movetype = event.type === "mouseup" ? "mousemove" : "touchmove";
     this.wrapper.removeEventListener(movetype, this.onMove);
     this.dist.finalPosition = this.dist.movePosition;
     this.transition(true);
@@ -65,10 +64,10 @@ main
   }
 
   addSlideEvents() {
-    this.wrapper.addEventListener('mousedown', this.onStart);
-    this.wrapper.addEventListener('touchstart', this.onStart);
-    this.wrapper.addEventListener('mouseup', this.onEnd);
-    this.wrapper.addEventListener('touchend', this.onEnd);
+    this.wrapper.addEventListener("mousedown", this.onStart);
+    this.wrapper.addEventListener("touchstart", this.onStart);
+    this.wrapper.addEventListener("mouseup", this.onEnd);
+    this.wrapper.addEventListener("touchend", this.onEnd);
   }
 
   // Slides config
@@ -91,7 +90,7 @@ main
       prev: index ? index - 1 : undefined,
       active: index,
       next: index === last ? undefined : index + 1,
-    }
+    };
   }
 
   changeSlide(index) {
@@ -103,7 +102,9 @@ main
   }
 
   changeActiveClass() {
-    this.slideArray.forEach(item => item.element.classList.remove(this.activeClass));
+    this.slideArray.forEach((item) =>
+      item.element.classList.remove(this.activeClass)
+    );
     this.slideArray[this.index.active].element.classList.add(this.activeClass);
   }
 
@@ -123,7 +124,7 @@ main
   }
 
   addResizeEvent() {
-    window.addEventListener('resize', this.onResize);
+    window.addEventListener("resize", this.onResize);
   }
 
   bindEvents() {
@@ -131,12 +132,9 @@ main
     this.onMove = this.onMove.bind(this);
     this.onEnd = this.onEnd.bind(this);
 
-navegacao
     this.activePrevSlide = this.activePrevSlide.bind(this);
     this.activeNextSlide = this.activeNextSlide.bind(this);
 
-=======
-main
     this.onResize = debounce(this.onResize.bind(this), 200);
   }
 
@@ -146,7 +144,7 @@ main
     this.addSlideEvents();
     this.slidesConfig();
     this.addResizeEvent();
-navegacao
+    navegacao;
     this.changeSlide(0);
     return this;
   }
@@ -160,11 +158,7 @@ export class SlideNav extends Slide {
   }
 
   addArrowEvent() {
-    this.prevElement.addEventListener('click', this.activePrevSlide);
-    this.nextElement.addEventListener('click', this.activeNextSlide);
+    this.prevElement.addEventListener("click", this.activePrevSlide);
+    this.nextElement.addEventListener("click", this.activeNextSlide);
   }
-=======
-    return this;
-  }
-main
 }
